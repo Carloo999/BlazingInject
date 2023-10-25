@@ -10,6 +10,20 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
 
+    public ServiceCollection TryAddSingleton<TService, TImplementation>()
+        where TService : class
+        where TImplementation : class, TService
+    {
+        ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TImplementation>(ServiceLifetime.Singleton);
+
+        if (!Contains(serviceDescriptor))
+        {
+            Add(serviceDescriptor);
+        }
+
+        return this;
+    }
+
     public ServiceCollection AddSingleton<TService>(Func<ServiceProvider, TService> factory)
         where TService : class
     {
@@ -53,6 +67,20 @@ public class ServiceCollection : List<ServiceDescriptor>
     {
         ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TImplementation>(ServiceLifetime.Singleton);
         Add(serviceDescriptor);
+        return this;
+    }
+
+    public ServiceCollection TryAddTransient<TService, TImplementation>()
+        where TService : class
+        where TImplementation : class, TService
+    {
+        ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TImplementation>(ServiceLifetime.Transient);
+
+        if (!Contains(serviceDescriptor))
+        {
+            Add(serviceDescriptor);
+        }
+
         return this;
     }
     
@@ -100,6 +128,15 @@ public class ServiceCollection : List<ServiceDescriptor>
 
     public ServiceProvider BuildServiceProvider()
     {
+        CheckTryAdd();
         return new ServiceProvider(this);
+    }
+
+    private void CheckTryAdd()
+    {
+        foreach (ServiceDescriptor descriptor in this)
+        {
+            
+        }
     }
 }
