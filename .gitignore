@@ -1,3 +1,7 @@
 /BlazingInject.Core/bin/
 /BlazingInject.Core/obj/
 .idea/
+
+BlazingInject.Consumer/bin/
+
+BlazingInject.Consumer/obj/
