@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{33DE0CF6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testConsumer", "testConsumer", "{99F0BB20-63CF-4359-8CA8-B7D21FD0CE83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingInject.Tests.Unit", "BlazingInject.Tests.Unit\BlazingInject.Tests.Unit.csproj", "{AB14F14C-60A6-42C6-A4ED-4904E64DE00A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,9 +26,14 @@ Global
 		{004E64DC-1850-4921-AC94-E739ED70AF70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{004E64DC-1850-4921-AC94-E739ED70AF70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{004E64DC-1850-4921-AC94-E739ED70AF70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB14F14C-60A6-42C6-A4ED-4904E64DE00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB14F14C-60A6-42C6-A4ED-4904E64DE00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB14F14C-60A6-42C6-A4ED-4904E64DE00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB14F14C-60A6-42C6-A4ED-4904E64DE00A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{004E64DC-1850-4921-AC94-E739ED70AF70} = {7FDB0FB2-C5A8-45F6-874E-1BB62B8C07F7}
 		{4FBA8B6D-2D84-4986-806B-C76935916F11} = {99F0BB20-63CF-4359-8CA8-B7D21FD0CE83}
+		{AB14F14C-60A6-42C6-A4ED-4904E64DE00A} = {33DE0CF6-FD58-47B7-957D-2576F6F88E1D}
 	EndGlobalSection
 EndGlobal
