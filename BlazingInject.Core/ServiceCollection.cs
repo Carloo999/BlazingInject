@@ -1,22 +1,22 @@
 ﻿
 namespace BlazingInject.Core;
 
-public class ServiceCollection : List<ServiceDescriptor>
+public class ServiceCollection : List<ServiceDescriptor>, IServiceCollection
 {
 
-    public ServiceCollection AddService(ServiceDescriptor descriptor)
+    public IServiceCollection AddService(ServiceDescriptor descriptor)
     {
         Add(descriptor);
         return this;
     }
 
-    public ServiceCollection TryAddSingleton<TService, TImplementation>()
+    public IServiceCollection TryAddSingleton<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
     {
         ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TImplementation>(ServiceLifetime.Singleton);
 
-        if (!Contains(serviceDescriptor))
+        if (this.All(x => x.ServiceType != typeof(TService)))
         {
             Add(serviceDescriptor);
         }
@@ -24,7 +24,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
 
-    public ServiceCollection AddSingleton<TService>(Func<ServiceProvider, TService> factory)
+    public IServiceCollection AddSingleton<TService>(Func<ServiceProvider, TService> factory)
         where TService : class
     {
         var serviceDescriptor = new ServiceDescriptor
@@ -38,7 +38,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
 
-    public ServiceCollection AddSingleton(object implementation)
+    public IServiceCollection AddSingleton(object implementation)
     {
         var serviceType = implementation.GetType();
         
@@ -53,7 +53,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
     
-    public ServiceCollection AddSingleton<TService>()
+    public IServiceCollection AddSingleton<TService>()
         where TService : class
     {
         ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TService>(ServiceLifetime.Singleton);
@@ -61,7 +61,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
     
-    public ServiceCollection AddSingleton<TService, TImplementation>()
+    public IServiceCollection AddSingleton<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
     {
@@ -70,13 +70,14 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
 
-    public ServiceCollection TryAddTransient<TService, TImplementation>()
+    public IServiceCollection TryAddTransient<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
     {
         ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TImplementation>(ServiceLifetime.Transient);
 
-        if (!Contains(serviceDescriptor))
+        
+        if (this.All(x => x.ServiceType != typeof(TService)))
         {
             Add(serviceDescriptor);
         }
@@ -84,7 +85,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
     
-    public ServiceCollection AddTransient<TService>(Func<ServiceProvider, TService> factory)
+    public IServiceCollection AddTransient<TService>(Func<ServiceProvider, TService> factory)
         where TService : class
     {
         var serviceDescriptor = new ServiceDescriptor
@@ -98,7 +99,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
     
-    public ServiceCollection AddTransient<TService, TImplementation>()
+    public IServiceCollection AddTransient<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
     {
@@ -107,7 +108,7 @@ public class ServiceCollection : List<ServiceDescriptor>
         return this;
     }
     
-    public ServiceCollection AddTransient<TService>()
+    public IServiceCollection AddTransient<TService>()
         where TService : class
     {
         ServiceDescriptor serviceDescriptor = AddServiceDescriptorWithLifetime<TService, TService>(ServiceLifetime.Transient);
@@ -126,12 +127,14 @@ public class ServiceCollection : List<ServiceDescriptor>
         return serviceDescriptor;
     }
 
+    // TODO: weird bc not interface but also where do i get implementation 
     public ServiceProvider BuildServiceProvider()
     {
         CheckTryAdd();
         return new ServiceProvider(this);
     }
 
+    // TODO: Why is this here?
     private void CheckTryAdd()
     {
         foreach (ServiceDescriptor descriptor in this)
